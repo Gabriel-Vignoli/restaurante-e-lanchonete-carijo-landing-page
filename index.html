@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carijó — Restaurante & Lanchonete</title>
+    <link rel="icon" href="img/logo-carijo-3.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@300;400;600;700&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav id="navbar">
+        <div class="nav-logo"><a href="#hero"><img src="img/logo-carijo-2.svg" alt="Carijó"></a></div>
+        <ul class="nav-links">
+            <li><a href="#selfservice">Self Service</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#produtos">Produtos</a></li>
+            <li><a href="#esfirras">Esfirras</a></li>
+            <li><a href="#contato">Contato</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#selfservice" class="mobile-link">Self Service</a>
+        <a href="#produtos" class="mobile-link">Produtos</a>
+        <a href="#esfirras" class="mobile-link">Esfirras</a>
+        <a href="#contato" class="mobile-link">Contato</a>
+    </div>
+
+    <!-- HERO -->
+    <section id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-texture"></div>
+        <div class="hero-content">
+            <div class="hero-badge">Restaurante & Lanchonete</div>
+            <h1 class="hero-title">
+                Carijó<em>Sabor de Verdade</em>
+            </h1>
+            <p class="hero-subtitle">Tradição & Sabor na sua cidade</p>
+            <p class="hero-desc">
+                Um lugar onde cada refeição conta uma história. Self service fresquinho no almoço, lanches irresistíveis
+                e esfirras artesanais à noite.
+            </p>
+            <div class="hero-ctas">
+                <a href="#selfservice" class="btn-primary">Nosso Cardápio</a>
+                <a href="#esfirras" class="btn-outline">Esfirras da Noite ✦</a>
+            </div>
+        </div>
+
+        <div class="hero-scroll">
+            <div class="scroll-line"></div>
+            <span>Explorar</span>
+        </div>
+    </section>
+
+    <!-- SELF SERVICE -->
+    <section id="selfservice">
+        <div class="selfservice-grid">
+            <div class="selfservice-text">
+                <div class="section-label reveal">02 — Self Service</div>
+                <h2 class="section-title reveal">Almoço <em>Feito com Carinho</em></h2>
+                <p class="reveal">Nosso self service é preparado diariamente com ingredientes frescos e selecionados.
+                    Variedade no prato, sabor em cada garfada — uma experiência gastronômica acessível e deliciosa.</p>
+                <div class="selfservice-stats">
+                    <div class="stat-card reveal-scale">
+                        <span class="stat-num">+20</span>
+                        <span class="stat-label">Opções diárias</span>
+                    </div>
+                    <div class="stat-card reveal-scale">
+                        <span class="stat-num">100%</span>
+                        <span class="stat-label">Ingredientes frescos</span>
+                    </div>
+                    <div class="stat-card reveal-scale">
+                        <span class="stat-num">Seg</span>
+                        <span class="stat-label">a Domingo</span>
+                    </div>
+                    <div class="stat-card reveal-scale">
+                        <span class="stat-num">11h</span>
+                        <span class="stat-label">Até as 15h</span>
+                    </div>
+                </div>
+                <div class="horarios-box reveal">
+                    <div class="horarios-title">🕐 Horário do Self Service</div>
+                    <div class="horario-row"><span>Segunda a Domingo (Almoço)</span><span>11h – 15h</span></div>
+                    <div class="horario-row"><span>Segunda a Sexta (Jantar)</span><span>19h – 22h</span></div>
+                </div>
+            </div>
+            <div class="selfservice-visual reveal-right">
+                <div class="visual-main">
+                    <div class="visual-float">🍛</div>
+                    <div class="visual-tag">
+                        <span>Self Service</span>
+                        <small>Pague uma vez e coma a vontade · Qualidade garantida</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+     SEÇÃO: SOBRE O RESTAURANTE
+     Cole após a seção #selfservice no index.html
+════════════════════════════════════════════════ -->
+    <section id="sobre">
+        <div class="sobre-grid">
+            <div class="sobre-img-wrap reveal-left">
+                <!-- SUBSTITUA o src pela foto real do restaurante -->
+                <img src="img/b.webp" alt="Restaurante Carijó em Arceburgo MG" class="sobre-foto">
+                <div class="sobre-foto-badge">
+                    <strong>Carijó</strong>
+                    <small>Arceburgo, Minas Gerais</small>
+                </div>
+            </div>
+            <div class="sobre-text">
+                <div class="section-label reveal">03 — Nossa História</div>
+                <h2 class="section-title reveal">Um sabor que <em>fica na memória</em></h2>
+                <p class="reveal">O Carijó nasceu do amor pela boa comida e pelo acolhimento que só um restaurante de
+                    verdade sabe oferecer. Aqui, cada prato é preparado com carinho, ingredientes frescos e a dedicação
+                    de quem faz isso com o coração.</p>
+                <p class="reveal">Somos um ponto de encontro para quem busca qualidade, sabor e aquele clima
+                    aconchegante
+                    de casa. Seja para o almoço em família, o lanche da tarde ou as esfirras artesanais da noite, o
+                    Carijó é o lugar onde você sempre vai querer voltar.</p>
+                <div class="sobre-localizacao reveal">
+                    <div class="loc-pin">📍</div>
+                    <div>
+                        <strong>Arceburgo, Minas Gerais</strong>
+                        <span>Venha nos visitar!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- PRODUTOS -->
+    <section id="produtos">
+        <div class="produtos-header">
+            <div>
+                <div class="section-label reveal">04 — Nossos Produtos</div>
+                <h2 class="section-title reveal">Tudo o que <em>você precisa</em></h2>
+            </div>
+            <p class="reveal">Da lanchonete ao restaurante, temos opções para todos os momentos do seu dia.</p>
+        </div>
+        <div class="produtos-grid">
+            <div class="produto-card reveal-scale">
+                <span class="produto-icon">🥤</span>
+                <div class="produto-name">Sucos 100% Naturais</div>
+                <p class="produto-desc">Frutas selecionadas e batidas na hora. Experimente nossos sabores refrescantes
+                    de Abacaxi e Laranja.</p>
+                <span class="produto-tag">Fresquinho</span>
+            </div>
+
+            <div class="produto-card reveal-scale">
+                <span class="produto-icon">🍔</span>
+                <div class="produto-name">Lanches & Hambúrgueres</div>
+                <p class="produto-desc">Pão macio, recheio generoso e muito sabor. Opções tradicionais e especiais para
+                    qualquer hora.</p>
+                <span class="produto-tag">Favorito</span>
+            </div>
+
+            <div class="produto-card reveal-scale">
+                <span class="produto-icon">🧀</span>
+                <div class="produto-name">Pão de Queijo</div>
+                <p class="produto-desc">Receita tradicional, sempre quentinho e com várias variações que todo
+                    mundo ama.</p>
+                <span class="produto-tag">Irresistível</span>
+            </div>
+
+            <div class="produto-card reveal-scale">
+                <span class="produto-icon">🥟</span>
+                <div class="produto-name">Pastéis</div>
+                <p class="produto-desc">Massa crocante e sequinha, recheada com ingredientes de qualidade. O
+                    acompanhamento perfeito.</p>
+                <span class="produto-tag">Crocante</span>
+            </div>
+
+            <div class="produto-card reveal-scale">
+                <span class="produto-icon">🥪</span>
+                <div class="produto-name">Lanches Especiais</div>
+                <p class="produto-desc">O legítimo sabor artesanal: experimente nossos famosos X-Linguiça e X-Pernil
+                    caprichados.</p>
+                <span class="produto-tag">Especial</span>
+            </div>
+
+            <div class="produto-card reveal-scale">
+                <span class="produto-icon">🍰</span>
+                <div class="produto-name">Sobremesas</div>
+                <p class="produto-desc">Docinho de leite ou goiabada caseiro, pudim e muito mais para adoçar seu dia com
+                    qualidade.</p>
+                <span class="produto-tag">Doce Vida</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ESFIRRAS -->
+    <section id="esfirras">
+        <div class="esfirras-inner">
+            <div class="esfirras-top">
+                <div class="esfirras-text">
+                    <div class="section-label reveal">05 — Especial da Noite</div>
+                    <h2 class="section-title reveal">Esfirras <em>Artesanais</em></h2>
+                    <p class="reveal">Massa fofinha, recheio generoso e amor em cada mordida. Nossas esfirras são
+                        preparadas artesanalmente todas as noites, disponíveis apenas de quinta a domingo.</p>
+                    <div class="noite-badge reveal">
+                        <div class="dot"></div>
+                        Disponível apenas à noite • Qui – Dom
+                    </div>
+                    <div class="esfirras-dias reveal">
+                        <span class="dia-chip inactive">Seg</span>
+                        <span class="dia-chip inactive">Ter</span>
+                        <span class="dia-chip inactive">Qua</span>
+                        <span class="dia-chip active">Qui</span>
+                        <span class="dia-chip active">Sex</span>
+                        <span class="dia-chip active">Sáb</span>
+                        <span class="dia-chip active">Dom</span>
+                    </div>
+                </div>
+                <div class="esfirras-visual reveal-right">
+                    <div class="esfirras-bg-card">🫓</div>
+                </div>
+            </div>
+            <div class="esfirras-grid">
+                <div class="esfirra-card reveal-scale">
+                    <div class="esfirra-emoji">🥩</div>
+                    <div class="esfirra-info">
+                        <div class="esfirra-name">Carne</div>
+                        <div class="esfirra-desc">Carne bovina selecionada, moída e temperada com
+                            o toque secreto de especiarias da casa. Com mussarela, requeijão ou calabresa.</div>
+                    </div>
+                </div>
+
+                <div class="esfirra-card reveal-scale">
+                    <div class="esfirra-emoji">🐔</div>
+                    <div class="esfirra-info">
+                        <div class="esfirra-name">Frango com Requeijão</div>
+                        <div class="esfirra-desc">Peito de frango desfiado e suculento,
+                            finalizado com a cremosidade do legítimo requeijão. Com mussarela, milho ou requeijão</div>
+                    </div>
+                </div>
+
+                <div class="esfirra-card reveal-scale">
+                    <div class="esfirra-emoji">🌿</div>
+                    <div class="esfirra-info">
+                        <div class="esfirra-name">Escarola</div>
+                        <div class="esfirra-desc">Folhas de escarola frescas refogadas e um
+                            toque de mussarela gratinada. Com mussarela ou bacon,</div>
+                    </div>
+                </div>
+
+                <div class="esfirra-card reveal-scale">
+                    <div class="esfirra-emoji">🥓</div>
+                    <div class="esfirra-info">
+                        <div class="esfirra-name">Bacon Crocante</div>
+                        <div class="esfirra-desc">Combinação irresistível de mussarela derretida com cubos de bacon
+                            selecionados, fritos até ficarem crocantes. Com mussarela, requeijão ou cheeder.</div>
+                    </div>
+                </div>
+
+                <div class="esfirra-card reveal-scale">
+                    <div class="esfirra-emoji">🧀</div>
+                    <div class="esfirra-info">
+                        <div class="esfirra-name">Mussarela</div>
+                        <div class="esfirra-desc">Generosa camada de queijo mussarela de alta qualidade, derretida com o aroma perfeito.</div>
+                    </div>
+                </div>
+
+                <div class="esfirra-card reveal-scale">
+                    <div class="esfirra-emoji">🍫</div>
+                    <div class="esfirra-info">
+                        <div class="esfirra-name">Doces</div>
+                        <div class="esfirra-desc">Massa leve recheada com chocolate, nutella, ninho, doce de leite, morango ou banana. A sobremesa perfeita para fechar a noite com chave de ouro.</div>
+                        </div>
+                    </div>
+    </section>
+
+    <section id="avaliacoes">
+        <div class="avaliacoes-inner">
+            <div class="avaliacoes-header">
+                <div class="section-label reveal" style="color: var(--blue-light); justify-content: center;">
+                    ⭐ Avaliações dos Clientes
+                </div>
+                <h2 class="section-title reveal" style="color: var(--cream); text-align: center;">O que nossos clientes
+                    <em>dizem</em>
+                </h2>
+                <div class="av-score reveal">
+                    <span class="av-num">4,9</span>
+                    <div class="av-score-info">
+                        <div class="av-stars">★★★★★</div>
+                        <small>Baseado em avaliações no Google Maps</small>
+                        <div class="g-badge">🔍 Google Maps</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reviews-grid">
+                <div class="review-card reveal-scale">
+                    <div class="review-header">
+                        <div class="review-avatar" style="background: rgba(2,175,244,0.18); color: var(--blue-light);">
+                            MA
+                        </div>
+                        <div class="review-meta">
+                            <strong>Maria Aparecida S.</strong>
+                            <small>Arceburgo, MG</small>
+                        </div>
+                    </div>
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Melhor self service da cidade! Comida sempre fresquinha, variedade incrível
+                        e
+                        preço justo. Almoço todo dia aqui quando posso."</p>
+                </div>
+
+                <div class="review-card reveal-scale">
+                    <div class="review-header">
+                        <div class="review-avatar" style="background: rgba(254,237,1,0.15); color: var(--yellow);">JR
+                        </div>
+                        <div class="review-meta">
+                            <strong>João Ricardo M.</strong>
+                            <small>Arceburgo, MG</small>
+                        </div>
+                    </div>
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"As esfirras do Carijó são outra categoria! Massa fofinha, recheio generoso.
+                        Quinta-feira já fico esperando. Nunca decepcionou!"</p>
+                </div>
+
+                <div class="review-card reveal-scale">
+                    <div class="review-header">
+                        <div class="review-avatar" style="background: rgba(10,127,168,0.25); color: var(--teal-light);">
+                            CF
+                        </div>
+                        <div class="review-meta">
+                            <strong>Claudinha Ferreira</strong>
+                            <small>Arceburgo, MG</small>
+                        </div>
+                    </div>
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Atendimento nota 10! O pessoal é super simpático e o ambiente é sempre
+                        limpo.
+                        Comida caseira de verdade, como a gente gosta."</p>
+                </div>
+
+                <div class="review-card reveal-scale">
+                    <div class="review-header">
+                        <div class="review-avatar" style="background: rgba(30,190,100,0.15); color: #4caf7d;">RL
+                        </div>
+                        <div class="review-meta">
+                            <strong>Roberto L.</strong>
+                            <small>Passos, MG</small>
+                        </div>
+                    </div>
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Passei por Arceburgo e almocei no Carijó. Surpreendeu muito! Qualidade de
+                        restaurante grande numa cidade pequena. Recomendo demais."</p>
+                </div>
+
+                <div class="review-card reveal-scale">
+                    <div class="review-header">
+                        <div class="review-avatar" style="background: rgba(200,80,80,0.15); color: #e07070;">AS
+                        </div>
+                        <div class="review-meta">
+                            <strong>Ana S.</strong>
+                            <small>Arceburgo, MG</small>
+                        </div>
+                    </div>
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"O frango com catupiry da esfirra é irresistível. Já virei fã! Toda semana
+                        venho com as amigas. Um lugar gostoso e aconchegante."</p>
+                </div>
+
+                <div class="review-card reveal-scale">
+                    <div class="review-header">
+                        <div class="review-avatar" style="background: rgba(160,100,220,0.15); color: #b07adf;">PT
+                        </div>
+                        <div class="review-meta">
+                            <strong>Paulo Tadeu R.</strong>
+                            <small>Arceburgo, MG</small>
+                        </div>
+                    </div>
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Melhor hambúrguer da região! Pão fresco, recheio caprichado. Levo a família
+                        sempre que posso. Excelente em tudo, parabéns ao Carijó!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section id="contato">
+        <div class="contato-inner">
+            <div class="contato-label reveal">Venha nos visitar</div>
+            <h2 class="contato-title reveal">Sua mesa <em>está pronta</em></h2>
+            <p class="contato-desc reveal">Estamos esperando por você com comida boa e atendimento ainda melhor. Almoço,
+                lanche ou jantar — o Carijó é o seu lugar.</p>
+            <div class="contato-links reveal">
+                <a href="https://wa.me/5516999999999" target="_blank" class="btn-primary">📲 WhatsApp</a>
+                <a href="#" class="btn-outline">📍 Como Chegar</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-logo"><a href="#hero"><img src="img/logo-carijo-2.svg" alt="Carijo"></a></div>
+        <p>© 2026 Restaurante & Lanchonete Carijó · Todos os direitos reservados</p>
+        <p style="color: rgba(255,255,255,0.2);">Feito com ❤️</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
