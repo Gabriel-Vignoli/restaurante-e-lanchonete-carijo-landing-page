@@ -1352,3 +1352,119 @@ footer p {
         order: -1;
     }
 }
+
+/* ═══════════════════════════════════════════════════════
+   CARIJÓ — 3D ANIMATIONS CSS
+   Cole no final do styles.css
+═══════════════════════════════════════════════════════ */
+
+/* ─── HERO CANVAS (Three.js) ─── */
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Hero content precisa de z-index acima do canvas */
+.hero-content { z-index: 3; }
+.hero-badge   { z-index: 3; }
+.hero-scroll  { z-index: 3; }
+.hero-circles { z-index: 0; }
+.hero-texture { z-index: 0; }
+.hero-bg      { z-index: 0; }
+
+/* ─── FOOD ORBS ─── */
+.food-orb {
+  user-select: none;
+}
+
+/* ─── CARTA 3D base ─── */
+.produto-card,
+.esfirra-card,
+.review-card,
+.stat-card,
+.visual-main {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* ─── BLOB SVG (esfirras section accent) ─── */
+#blob-svg {
+  position: absolute;
+  top: 50%;
+  right: -180px;
+  transform: translateY(-50%);
+  width: 360px;
+  height: 360px;
+  opacity: 0.07;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+}
+
+#blob-svg path {
+  fill: var(--blue);
+}
+
+/* ─── HERO LETTER ANIMATION ─── */
+.hero-letter {
+  display: inline-block;
+}
+
+/* ─── MAGNETIC BUTTON (não conflita com hover existente) ─── */
+.btn-primary,
+.btn-outline {
+  will-change: transform, box-shadow;
+}
+
+/* ─── 3D FLIP REVEAL — animation initial states ─── */
+/* Sobrescreve os .reveal-scale para as cards terem estado inicial */
+.produto-card.reveal-scale,
+.esfirra-card.reveal-scale,
+.review-card.reveal-scale {
+  opacity: 0; /* GSAP vai animar */
+}
+
+/* ─── CURSOR GLOW (desktop only) ─── */
+@media (hover: none) {
+  /* Remove cursor em touch */
+}
+
+/* ─── 3D PERSPECTIVE CONTAINERS ─── */
+.produtos-grid,
+.esfirras-grid,
+.reviews-grid,
+.selfservice-stats {
+  perspective: 1200px;
+}
+
+/* ─── SMOOTH CARD TRANSITIONS quando sem JS ─── */
+@media (prefers-reduced-motion: reduce) {
+  .produto-card,
+  .esfirra-card,
+  .review-card,
+  .stat-card {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  #hero-canvas {
+    display: none;
+  }
+}
+
+/* ─── GLARE (gerado via JS, garantir z-index) ─── */
+.produto-card > div[style*="radial-gradient"],
+.esfirra-card > div[style*="radial-gradient"],
+.review-card > div[style*="radial-gradient"],
+.stat-card > div[style*="radial-gradient"] {
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* ─── BLOB ESFIRRAS POSITION ─── */
+#esfirras {
+  position: relative; /* já existe, garante */
+}

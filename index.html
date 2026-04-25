@@ -11,9 +11,16 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@300;400;600;700&display=swap"
         rel="stylesheet" />
+
+    <!-- Three.js ANTES de tudo -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles3d.css">
 </head>
 
 <body>
@@ -42,6 +49,9 @@
 
     <!-- HERO -->
     <section id="hero">
+        <!-- ✨ THREE.JS CANVAS — partículas 3D -->
+        <canvas id="hero-canvas"></canvas>
+
         <div class="hero-bg"></div>
         <div class="hero-texture"></div>
         <div class="hero-content">
@@ -110,14 +120,10 @@
         </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════════
-     SEÇÃO: SOBRE O RESTAURANTE
-     Cole após a seção #selfservice no index.html
-════════════════════════════════════════════════ -->
+    <!-- SOBRE -->
     <section id="sobre">
         <div class="sobre-grid">
             <div class="sobre-img-wrap reveal-left">
-                <!-- SUBSTITUA o src pela foto real do restaurante -->
                 <img src="img/b.webp" alt="Restaurante Carijó em Arceburgo MG" class="sobre-foto">
                 <div class="sobre-foto-badge">
                     <strong>Carijó</strong>
@@ -131,8 +137,8 @@
                     verdade sabe oferecer. Aqui, cada prato é preparado com carinho, ingredientes frescos e a dedicação
                     de quem faz isso com o coração.</p>
                 <p class="reveal">Somos um ponto de encontro para quem busca qualidade, sabor e aquele clima
-                    aconchegante
-                    de casa. Seja para o almoço em família, o lanche da tarde ou as esfirras artesanais da noite, o
+                    aconchegante de casa. Seja para o almoço em família, o lanche da tarde ou as esfirras artesanais da
+                    noite, o
                     Carijó é o lugar onde você sempre vai querer voltar.</p>
                 <div class="sobre-localizacao reveal">
                     <div class="loc-pin">📍</div>
@@ -144,7 +150,6 @@
             </div>
         </div>
     </section>
-
 
     <!-- PRODUTOS -->
     <section id="produtos">
@@ -163,7 +168,6 @@
                     de Abacaxi e Laranja.</p>
                 <span class="produto-tag">Fresquinho</span>
             </div>
-
             <div class="produto-card reveal-scale">
                 <span class="produto-icon">🍔</span>
                 <div class="produto-name">Lanches & Hambúrgueres</div>
@@ -171,7 +175,6 @@
                     qualquer hora.</p>
                 <span class="produto-tag">Favorito</span>
             </div>
-
             <div class="produto-card reveal-scale">
                 <span class="produto-icon">🧀</span>
                 <div class="produto-name">Pão de Queijo</div>
@@ -179,7 +182,6 @@
                     mundo ama.</p>
                 <span class="produto-tag">Irresistível</span>
             </div>
-
             <div class="produto-card reveal-scale">
                 <span class="produto-icon">🥟</span>
                 <div class="produto-name">Pastéis</div>
@@ -187,7 +189,6 @@
                     acompanhamento perfeito.</p>
                 <span class="produto-tag">Crocante</span>
             </div>
-
             <div class="produto-card reveal-scale">
                 <span class="produto-icon">🥪</span>
                 <div class="produto-name">Lanches Especiais</div>
@@ -195,7 +196,6 @@
                     caprichados.</p>
                 <span class="produto-tag">Especial</span>
             </div>
-
             <div class="produto-card reveal-scale">
                 <span class="produto-icon">🍰</span>
                 <div class="produto-name">Sobremesas</div>
@@ -208,6 +208,11 @@
 
     <!-- ESFIRRAS -->
     <section id="esfirras">
+        <!-- Blob SVG accent -->
+        <svg id="blob-svg" viewBox="-160 -160 320 320" xmlns="http://www.w3.org/2000/svg">
+            <path d="" />
+        </svg>
+
         <div class="esfirras-inner">
             <div class="esfirras-top">
                 <div class="esfirras-text">
@@ -242,7 +247,6 @@
                             o toque secreto de especiarias da casa. Com mussarela, requeijão ou calabresa.</div>
                     </div>
                 </div>
-
                 <div class="esfirra-card reveal-scale">
                     <div class="esfirra-emoji">🐔</div>
                     <div class="esfirra-info">
@@ -251,42 +255,43 @@
                             finalizado com a cremosidade do legítimo requeijão. Com mussarela, milho ou requeijão</div>
                     </div>
                 </div>
-
                 <div class="esfirra-card reveal-scale">
                     <div class="esfirra-emoji">🌿</div>
                     <div class="esfirra-info">
                         <div class="esfirra-name">Escarola</div>
                         <div class="esfirra-desc">Folhas de escarola frescas refogadas e um
-                            toque de mussarela gratinada. Com mussarela ou bacon,</div>
+                            toque de mussarela gratinada. Com mussarela ou bacon.</div>
                     </div>
                 </div>
-
                 <div class="esfirra-card reveal-scale">
                     <div class="esfirra-emoji">🥓</div>
                     <div class="esfirra-info">
                         <div class="esfirra-name">Bacon Crocante</div>
                         <div class="esfirra-desc">Combinação irresistível de mussarela derretida com cubos de bacon
-                            selecionados, fritos até ficarem crocantes. Com mussarela, requeijão ou cheeder.</div>
+                            selecionados, fritos até ficarem crocantes. Com mussarela, requeijão ou cheddar.</div>
                     </div>
                 </div>
-
                 <div class="esfirra-card reveal-scale">
                     <div class="esfirra-emoji">🧀</div>
                     <div class="esfirra-info">
                         <div class="esfirra-name">Mussarela</div>
-                        <div class="esfirra-desc">Generosa camada de queijo mussarela de alta qualidade, derretida com o aroma perfeito.</div>
+                        <div class="esfirra-desc">Generosa camada de queijo mussarela de alta qualidade, derretida com o
+                            aroma perfeito.</div>
                     </div>
                 </div>
-
                 <div class="esfirra-card reveal-scale">
                     <div class="esfirra-emoji">🍫</div>
                     <div class="esfirra-info">
                         <div class="esfirra-name">Doces</div>
-                        <div class="esfirra-desc">Massa leve recheada com chocolate, nutella, ninho, doce de leite, morango ou banana. A sobremesa perfeita para fechar a noite com chave de ouro.</div>
-                        </div>
+                        <div class="esfirra-desc">Massa leve recheada com chocolate, nutella, ninho, doce de leite,
+                            morango ou banana. A sobremesa perfeita para fechar a noite com chave de ouro.</div>
                     </div>
+                </div>
+            </div>
+        </div>
     </section>
 
+    <!-- AVALIAÇÕES -->
     <section id="avaliacoes">
         <div class="avaliacoes-inner">
             <div class="avaliacoes-header">
@@ -310,8 +315,7 @@
                 <div class="review-card reveal-scale">
                     <div class="review-header">
                         <div class="review-avatar" style="background: rgba(2,175,244,0.18); color: var(--blue-light);">
-                            MA
-                        </div>
+                            MA</div>
                         <div class="review-meta">
                             <strong>Maria Aparecida S.</strong>
                             <small>Arceburgo, MG</small>
@@ -319,10 +323,8 @@
                     </div>
                     <div class="review-stars">★★★★★</div>
                     <p class="review-text">"Melhor self service da cidade! Comida sempre fresquinha, variedade incrível
-                        e
-                        preço justo. Almoço todo dia aqui quando posso."</p>
+                        e preço justo. Almoço todo dia aqui quando posso."</p>
                 </div>
-
                 <div class="review-card reveal-scale">
                     <div class="review-header">
                         <div class="review-avatar" style="background: rgba(254,237,1,0.15); color: var(--yellow);">JR
@@ -336,12 +338,10 @@
                     <p class="review-text">"As esfirras do Carijó são outra categoria! Massa fofinha, recheio generoso.
                         Quinta-feira já fico esperando. Nunca decepcionou!"</p>
                 </div>
-
                 <div class="review-card reveal-scale">
                     <div class="review-header">
                         <div class="review-avatar" style="background: rgba(10,127,168,0.25); color: var(--teal-light);">
-                            CF
-                        </div>
+                            CF</div>
                         <div class="review-meta">
                             <strong>Claudinha Ferreira</strong>
                             <small>Arceburgo, MG</small>
@@ -349,14 +349,11 @@
                     </div>
                     <div class="review-stars">★★★★★</div>
                     <p class="review-text">"Atendimento nota 10! O pessoal é super simpático e o ambiente é sempre
-                        limpo.
-                        Comida caseira de verdade, como a gente gosta."</p>
+                        limpo. Comida caseira de verdade, como a gente gosta."</p>
                 </div>
-
                 <div class="review-card reveal-scale">
                     <div class="review-header">
-                        <div class="review-avatar" style="background: rgba(30,190,100,0.15); color: #4caf7d;">RL
-                        </div>
+                        <div class="review-avatar" style="background: rgba(30,190,100,0.15); color: #4caf7d;">RL</div>
                         <div class="review-meta">
                             <strong>Roberto L.</strong>
                             <small>Passos, MG</small>
@@ -366,11 +363,9 @@
                     <p class="review-text">"Passei por Arceburgo e almocei no Carijó. Surpreendeu muito! Qualidade de
                         restaurante grande numa cidade pequena. Recomendo demais."</p>
                 </div>
-
                 <div class="review-card reveal-scale">
                     <div class="review-header">
-                        <div class="review-avatar" style="background: rgba(200,80,80,0.15); color: #e07070;">AS
-                        </div>
+                        <div class="review-avatar" style="background: rgba(200,80,80,0.15); color: #e07070;">AS</div>
                         <div class="review-meta">
                             <strong>Ana S.</strong>
                             <small>Arceburgo, MG</small>
@@ -380,11 +375,9 @@
                     <p class="review-text">"O frango com catupiry da esfirra é irresistível. Já virei fã! Toda semana
                         venho com as amigas. Um lugar gostoso e aconchegante."</p>
                 </div>
-
                 <div class="review-card reveal-scale">
                     <div class="review-header">
-                        <div class="review-avatar" style="background: rgba(160,100,220,0.15); color: #b07adf;">PT
-                        </div>
+                        <div class="review-avatar" style="background: rgba(160,100,220,0.15); color: #b07adf;">PT</div>
                         <div class="review-meta">
                             <strong>Paulo Tadeu R.</strong>
                             <small>Arceburgo, MG</small>
@@ -419,6 +412,8 @@
         <p style="color: rgba(255,255,255,0.2);">Feito com ❤️</p>
     </footer>
 
+    <!-- 3D Script (substitui o script.js original) -->
+    <script src="styles3d.js"></script>
     <script src="script.js"></script>
 </body>
 
