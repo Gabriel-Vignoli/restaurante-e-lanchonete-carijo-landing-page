@@ -622,7 +622,171 @@ section {
     font-weight: 600;
 }
 
-/* era --ochre-light */
+/* ─── SÁBADO À NOITE ─── */
+#sabado {
+    background: var(--deep);
+    position: relative;
+    overflow: hidden;
+}
+
+#sabado::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 20% 50%, rgba(2, 175, 244, 0.12) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 30%, rgba(254, 237, 1, 0.06) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.sabado-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.sabado-header {
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto 3rem;
+}
+
+.sabado-header p {
+    margin-top: 1rem;
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.8;
+}
+
+/* ── Preço destaque ── */
+.sabado-preco {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3.5rem;
+}
+
+.preco-destaque {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    background: rgba(2, 175, 244, 0.08);
+    border: 1px solid rgba(2, 175, 244, 0.25);
+    border-radius: 16px;
+    padding: 1.2rem 2.8rem;
+    flex-direction: column;
+    align-items: center;
+}
+
+.preco-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blue-light);
+}
+
+.preco-valor {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1;
+}
+
+.preco-valor small {
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.preco-info {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.preco-info span {
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.45);
+    font-weight: 600;
+}
+
+/* ─── SÁBADO À NOITE ─── */
+#sabado {
+    background: var(--deep);
+    position: relative;
+    overflow: hidden;
+}
+
+#sabado::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(2, 175, 244, 0.07) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+/* Títulos e textos ficam claros no fundo escuro */
+#sabado .section-label {
+    color: var(--blue-light);
+}
+
+#sabado .section-title {
+    color: var(--cream);
+}
+
+#sabado .section-title em {
+    color: var(--yellow);
+}
+
+#sabado .selfservice-text p {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+/* Stat cards com visual escuro */
+#sabado .stat-card {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(2, 175, 244, 0.18);
+}
+
+#sabado .stat-card::before {
+    background: var(--blue-light);
+}
+
+#sabado .stat-num {
+    color: var(--blue-light);
+}
+
+#sabado .stat-label {
+    color: rgba(255, 255, 255, 0.45);
+}
+
+/* Visual com foto */
+.sabado-visual {
+    background: linear-gradient(135deg, var(--charcoal), var(--deep)) !important;
+    overflow: hidden;
+}
+
+.sabado-visual::before {
+    display: none;
+}
+
+.visual-foto {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.85;
+}
+
 
 /* ─── PRODUTOS ─── */
 #produtos {
@@ -858,7 +1022,7 @@ section {
 
 .esfirras-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.2rem;
 }
 
@@ -879,9 +1043,13 @@ section {
     transform: translateY(-3px);
 }
 
-.esfirra-emoji {
-    font-size: 2.2rem;
+.esfirra-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    object-fit: cover;
     flex-shrink: 0;
+    background: var(--deep);
 }
 
 .esfirra-name {
@@ -896,6 +1064,18 @@ section {
     font-size: 0.82rem;
     color: var(--text-light);
     line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+    .esfirras-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 560px) {
+    .esfirras-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ─── CTA FINAL ─── */
