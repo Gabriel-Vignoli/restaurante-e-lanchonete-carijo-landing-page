@@ -1648,3 +1648,16 @@ footer p {
 #esfirras {
   position: relative; /* já existe, garante */
 }
+
+
+.g-badge {
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.g-badge:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.25);
+    color: var(--cream);
+}
