@@ -198,60 +198,126 @@
         </div>
     </section>
 
-    <!-- PRODUTOS -->
-    <section id="produtos">
-        <div class="produtos-header">
+    <!-- PRODUTOS — Scroll Horizontal -->
+<section id="produtos">
+    <div class="produtos-pin-wrapper">
+        <!-- Cabeçalho fixo durante o scroll -->
+        <div class="produtos-header" id="produtos-header">
             <div>
                 <div class="section-label reveal">05 — Nossos Produtos</div>
                 <h2 class="section-title reveal">Tudo o que <em>você precisa</em></h2>
             </div>
             <p class="reveal">Da lanchonete ao restaurante, temos opções para todos os momentos do seu dia.</p>
         </div>
-        <div class="produtos-grid">
-            <div class="produto-card reveal-scale">
-                <span class="produto-icon">🥤</span>
-                <div class="produto-name">Sucos 100% Naturais</div>
-                <p class="produto-desc">Frutas selecionadas e batidas na hora. Experimente nossos sabores refrescantes
-                    de Abacaxi e Laranja.</p>
-                <span class="produto-tag">Fresquinho</span>
-            </div>
-            <div class="produto-card reveal-scale">
-                <span class="produto-icon">🍔</span>
-                <div class="produto-name">Lanches & Hambúrgueres</div>
-                <p class="produto-desc">Pão macio, recheio generoso e muito sabor. Opções tradicionais e especiais para
-                    qualquer hora.</p>
-                <span class="produto-tag">Favorito</span>
-            </div>
-            <div class="produto-card reveal-scale">
-                <span class="produto-icon">🧀</span>
-                <div class="produto-name">Pão de Queijo</div>
-                <p class="produto-desc">Receita tradicional, sempre quentinho e com várias variações que todo
-                    mundo ama.</p>
-                <span class="produto-tag">Irresistível</span>
-            </div>
-            <div class="produto-card reveal-scale">
-                <span class="produto-icon">🥟</span>
-                <div class="produto-name">Pastéis</div>
-                <p class="produto-desc">Massa crocante e sequinha, recheada com ingredientes de qualidade. O
-                    acompanhamento perfeito.</p>
-                <span class="produto-tag">Crocante</span>
-            </div>
-            <div class="produto-card reveal-scale">
-                <span class="produto-icon">🥪</span>
-                <div class="produto-name">Lanches Especiais</div>
-                <p class="produto-desc">O legítimo sabor artesanal: experimente nossos famosos X-Linguiça e X-Pernil
-                    caprichados.</p>
-                <span class="produto-tag">Especial</span>
-            </div>
-            <div class="produto-card reveal-scale">
-                <span class="produto-icon">🍰</span>
-                <div class="produto-name">Sobremesas</div>
-                <p class="produto-desc">Docinho de leite ou goiabada caseiro, pudim e muito mais para adoçar seu dia com
-                    qualidade.</p>
-                <span class="produto-tag">Doce Vida</span>
+
+        <!-- Trilho horizontal -->
+        <div class="produtos-scroll-viewport">
+            <div class="produtos-track" id="produtos-track">
+                <div class="produto-card-h">
+                    <span class="produto-icon">🥤</span>
+                    <div class="produto-name">Sucos 100% Naturais</div>
+                    <p class="produto-desc">Frutas selecionadas e batidas na hora. Experimente nossos sabores refrescantes de Abacaxi e Laranja.</p>
+                    <span class="produto-tag">Fresquinho</span>
+                </div>
+                <div class="produto-card-h">
+                    <span class="produto-icon">🍔</span>
+                    <div class="produto-name">Lanches & Hambúrgueres</div>
+                    <p class="produto-desc">Pão macio, recheio generoso e muito sabor. Opções tradicionais e especiais para qualquer hora.</p>
+                    <span class="produto-tag">Favorito</span>
+                </div>
+                <div class="produto-card-h">
+                    <span class="produto-icon">🧀</span>
+                    <div class="produto-name">Pão de Queijo</div>
+                    <p class="produto-desc">Receita tradicional, sempre quentinho e com várias variações que todo mundo ama.</p>
+                    <span class="produto-tag">Irresistível</span>
+                </div>
+                <div class="produto-card-h">
+                    <span class="produto-icon">🥟</span>
+                    <div class="produto-name">Pastéis</div>
+                    <p class="produto-desc">Massa crocante e sequinha, recheada com ingredientes de qualidade. O acompanhamento perfeito.</p>
+                    <span class="produto-tag">Crocante</span>
+                </div>
+                <div class="produto-card-h">
+                    <span class="produto-icon">🥪</span>
+                    <div class="produto-name">Lanches Especiais</div>
+                    <p class="produto-desc">O legítimo sabor artesanal: experimente nossos famosos X-Linguiça e X-Pernil caprichados.</p>
+                    <span class="produto-tag">Especial</span>
+                </div>
+                <div class="produto-card-h">
+                    <span class="produto-icon">🍰</span>
+                    <div class="produto-name">Sobremesas</div>
+                    <p class="produto-desc">Docinho de leite ou goiabada caseiro, pudim e muito mais para adoçar seu dia com qualidade.</p>
+                    <span class="produto-tag">Doce Vida</span>
+                </div>
             </div>
         </div>
-    </section>
+
+        <!-- Indicador de progresso (bolinhas) -->
+        <div class="produtos-dots" id="produtos-dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+
+        <!-- Hint de scroll -->
+        <div class="scroll-hint" id="scroll-hint">
+            <span>Scroll para explorar</span>
+            <svg width="40" height="16" viewBox="0 0 40 16" fill="none">
+                <path d="M0 8H38M38 8L31 2M38 8L31 14" stroke="rgba(2,175,244,0.6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+    </div>
+
+     <!-- Mobile: grid original -->
+    <div class="produtos-grid-mobile">
+        <div class="produtos-grid-mobile-header">
+    <div class="section-label">05 — Nossos Produtos</div>
+    <h2 class="section-title">Tudo o que <em>você precisa</em></h2>
+    <p style="color:rgba(255,255,255,0.55);margin-top:1rem;font-size:0.95rem;line-height:1.7">
+        Da lanchonete ao restaurante, temos opções para todos os momentos do seu dia.
+    </p>
+</div>
+        <div class="produto-card-h">
+            <span class="produto-icon">🥤</span>
+            <div class="produto-name">Sucos 100% Naturais</div>
+            <p class="produto-desc">Frutas selecionadas e batidas na hora. Experimente nossos sabores refrescantes de Abacaxi e Laranja.</p>
+            <span class="produto-tag">Fresquinho</span>
+        </div>
+        <div class="produto-card-h">
+            <span class="produto-icon">🍔</span>
+            <div class="produto-name">Lanches & Hambúrgueres</div>
+            <p class="produto-desc">Pão macio, recheio generoso e muito sabor. Opções tradicionais e especiais para qualquer hora.</p>
+            <span class="produto-tag">Favorito</span>
+        </div>
+        <div class="produto-card-h">
+            <span class="produto-icon">🧀</span>
+            <div class="produto-name">Pão de Queijo</div>
+            <p class="produto-desc">Receita tradicional, sempre quentinho e com várias variações que todo mundo ama.</p>
+            <span class="produto-tag">Irresistível</span>
+        </div>
+        <div class="produto-card-h">
+            <span class="produto-icon">🥟</span>
+            <div class="produto-name">Pastéis</div>
+            <p class="produto-desc">Massa crocante e sequinha, recheada com ingredientes de qualidade. O acompanhamento perfeito.</p>
+            <span class="produto-tag">Crocante</span>
+        </div>
+        <div class="produto-card-h">
+            <span class="produto-icon">🥪</span>
+            <div class="produto-name">Lanches Especiais</div>
+            <p class="produto-desc">O legítimo sabor artesanal: experimente nossos famosos X-Linguiça e X-Pernil caprichados.</p>
+            <span class="produto-tag">Especial</span>
+        </div>
+        <div class="produto-card-h">
+            <span class="produto-icon">🍰</span>
+            <div class="produto-name">Sobremesas</div>
+            <p class="produto-desc">Docinho de leite ou goiabada caseiro, pudim e muito mais para adoçar seu dia com qualidade.</p>
+            <span class="produto-tag">Doce Vida</span>
+        </div>
+    </div>
+</section>
 
     <!-- ESFIRRAS -->
     <section id="esfirras">

@@ -110,7 +110,7 @@ document.querySelectorAll(".stat-card").forEach((card, i) => {
 });
 
 // ─── PRODUTO CARDS HOVER ───
-document.querySelectorAll(".produto-card").forEach((card) => {
+document.querySelectorAll(".produto-card-h").forEach((card) => {
   card.addEventListener("mouseenter", () => {
     gsap.to(card.querySelector(".produto-icon"), {
       rotation: 15,
@@ -213,8 +213,6 @@ ScrollTrigger.create({
 //  Integra: Three.js particles hero, CSS 3D tilt cards,
 //           floating food orbs, liquid mesh background
 // ════════════════════════════════════════════════════
-
-gsap.registerPlugin(ScrollTrigger);
 
 // ─── UTILS ───────────────────────────────────────────
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -525,7 +523,7 @@ function addTilt(selector, opts = {}) {
 }
 
 // Apply tilt to all interactive cards
-addTilt(".produto-card", { maxTilt: 12, scale: 1.05, glareMax: 0.3 });
+addTilt(".produto-card-h", { maxTilt: 12, scale: 1.05, glareMax: 0.3 });
 addTilt(".esfirra-card", { maxTilt: 10, scale: 1.04, glareMax: 0.25 });
 addTilt(".review-card", { maxTilt: 8, scale: 1.03, glareMax: 0.2 });
 addTilt(".stat-card", { maxTilt: 14, scale: 1.06, glareMax: 0.35 });
@@ -641,27 +639,6 @@ magneticEffect(".btn-primary, .btn-outline");
       },
     );
     card.style.transformStyle = "preserve-3d";
-  });
-
-  // Produto cards — flip in
-  gsap.utils.toArray(".produto-card").forEach((card, i) => {
-    gsap.fromTo(
-      card,
-      { rotateY: -25, opacity: 0, x: -30 },
-      {
-        rotateY: 0,
-        opacity: 1,
-        x: 0,
-        duration: 0.8,
-        delay: (i % 3) * 0.12,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: card,
-          start: "top 88%",
-          toggleActions: "play none none none",
-        },
-      },
-    );
   });
 
   // Review cards — fall in from above
@@ -797,7 +774,7 @@ magneticEffect(".btn-primary, .btn-outline");
 
   // Expand on hoverable elements
   const hoverables =
-    "a, button, .produto-card, .esfirra-card, .stat-card, .review-card, .btn-primary, .btn-outline";
+    "a, button, .produto-card-h, .esfirra-card, .stat-card, .review-card, .btn-primary, .btn-outline";
   document.querySelectorAll(hoverables).forEach((el) => {
     el.addEventListener("mouseenter", () => {
       cursor.style.width = "40px";
@@ -822,131 +799,98 @@ magneticEffect(".btn-primary, .btn-outline");
   }
 })();
 
-// ════════════════════════════════════════════════════
-//  9. ORIGINAL GSAP (navbar, hero entrance etc.)
-// ════════════════════════════════════════════════════
+// ─── PRODUTOS — Scroll Horizontal (ScrollTrigger) ───────────────────────────
+(function initProdutosHScroll() {
+    const section = document.getElementById("produtos");
+    if (!section) return;
 
-// ─── NAVBAR ───
-const navbar = document.getElementById("navbar");
-window.addEventListener("scroll", () => {
-  navbar.classList.toggle("scrolled", window.scrollY > 60);
-});
+    // ── MOBILE ──────────────────────────────────────────
+    if (window.innerWidth <= 768) {
+        section.style.height = "auto";
 
-// ─── HAMBURGER ───
-const hamburger = document.getElementById("hamburger");
-const mobileMenu = document.getElementById("mobileMenu");
-hamburger.addEventListener("click", () => {
-  hamburger.classList.toggle("active");
-  mobileMenu.classList.toggle("open");
-});
-document.querySelectorAll(".mobile-link").forEach((link) => {
-  link.addEventListener("click", () => {
-    hamburger.classList.remove("active");
-    mobileMenu.classList.remove("open");
-  });
-});
+        window.addEventListener('load', () => {
+            ScrollTrigger.refresh();
 
-// ─── HERO ENTRANCE ───
-const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
-heroTl
-  .to(".hero-badge", { opacity: 1, y: 0, duration: 0.8, delay: 0.8 })
-  .to(".hero-title", { opacity: 1, y: 0, duration: 1 }, "-=0.4")
-  .to(".hero-subtitle", { opacity: 1, y: 0, duration: 0.8 }, "-=0.5")
-  .to(".hero-desc", { opacity: 1, y: 0, duration: 0.8 }, "-=0.4")
-  .to(".hero-ctas", { opacity: 1, y: 0, duration: 0.8 }, "-=0.4");
+            gsap.fromTo(
+                ".produtos-grid-mobile .section-label, .produtos-grid-mobile .section-title, .produtos-grid-mobile p",
+                { opacity: 0, y: 30 },
+                {
+                    opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: ".produtos-grid-mobile",
+                        start: "top 90%",
+                        toggleActions: "play none none none",
+                    }
+                }
+            );
 
-// ─── PARALLAX HERO ───
-gsap.to(".hero-circles", {
-  y: -60,
-  ease: "none",
-  scrollTrigger: {
-    trigger: "#hero",
-    start: "top top",
-    end: "bottom top",
-    scrub: true,
-  },
-});
+            gsap.utils.toArray(".produtos-grid-mobile .produto-card-h").forEach((card, i) => {
+                gsap.fromTo(card,
+                    { opacity: 0, y: 40 },  /* simplificado — sem rotateY no mobile */
+                    {
+                        opacity: 1, y: 0,
+                        duration: 0.7,
+                        delay: (i % 2) * 0.1,
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: card,
+                            start: "top 92%",
+                            toggleActions: "play none none none",
+                        }
+                    }
+                );
+            });
+        });
 
-// ─── SECTION REVEALS (fallback for non-3D) ───
-function createScrollReveal(selector) {
-  gsap.utils.toArray(selector).forEach((el, i) => {
-    // Skip elements that already have 3D animation
-    const skip = el.closest(
-      ".produto-card, .esfirra-card, .review-card, .stat-card",
-    );
-    if (skip) return;
-    gsap.to(el, {
-      opacity: 1,
-      y: 0,
-      x: 0,
-      scale: 1,
-      duration: 0.8,
-      delay: (i % 3) * 0.12,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: el,
-        start: "top 85%",
-        toggleActions: "play none none none",
-      },
+        return;
+    }
+
+    // ── DESKTOP ─────────────────────────────────────────
+    const track = document.getElementById("produtos-track");
+    const dots  = document.querySelectorAll("#produtos-dots .dot");
+    const hint  = document.getElementById("scroll-hint");
+    if (!track) return;
+
+    const totalCards = track.querySelectorAll(".produto-card-h").length;
+
+    function getScrollDistance() {
+        const viewportW = section.querySelector(".produtos-pin-wrapper").offsetWidth;
+        return Math.max(0, track.scrollWidth - viewportW);
+    }
+
+    gsap.to(track, {
+        x: () => -(getScrollDistance()),
+        ease: "none",
+        scrollTrigger: {
+            id:      "produtos-hscroll",
+            trigger:  section,
+            start:   "top top",
+            end:     () => `+=${(section.offsetHeight - window.innerHeight) * 0.65}`,
+            scrub:    0.4,
+            invalidateOnRefresh: true,
+            onUpdate(self) {
+                const idx = Math.round(self.progress * (totalCards - 1));
+                dots.forEach((d, i) => d.classList.toggle("active", i === idx));
+                if (hint) hint.style.opacity = self.progress > 0.12 ? "0" : "1";
+            },
+        },
     });
-  });
-}
 
-createScrollReveal(".reveal");
-createScrollReveal(".reveal-left");
-createScrollReveal(".reveal-right");
-createScrollReveal(".reveal-scale");
+    gsap.from("#produtos-header", {
+        y: 30, opacity: 0, duration: 1, ease: "power3.out", delay: 0.2,
+        clearProps: "opacity,transform"
+    });
 
-// ─── ESFIRRAS BG PARALLAX ───
-gsap.to(".esfirras-bg-card", {
-  y: -30,
-  ease: "none",
-  scrollTrigger: {
-    trigger: "#esfirras",
-    start: "top bottom",
-    end: "bottom top",
-    scrub: 1,
-  },
-});
+    dots.forEach((dot, i) => {
+        dot.addEventListener("click", () => {
+            const progress   = i / (totalCards - 1);
+            const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+            const travel     = section.offsetHeight - window.innerHeight;
+            window.scrollTo({ top: sectionTop + travel * progress, behavior: "smooth" });
+        });
+    });
 
-// ─── DIAS CHIP ANIMATION ───
-ScrollTrigger.create({
-  trigger: ".esfirras-dias",
-  start: "top 85%",
-  once: true,
-  onEnter: () => {
-    gsap.fromTo(
-      ".dia-chip",
-      { opacity: 0, y: 20, rotateX: 45 },
-      {
-        opacity: 1,
-        y: 0,
-        rotateX: 0,
-        stagger: 0.08,
-        duration: 0.5,
-        ease: "back.out(1.5)",
-      },
-    );
-  },
-});
-
-// ─── CONTATO SECTION ───
-ScrollTrigger.create({
-  trigger: "#contato",
-  start: "top 70%",
-  once: true,
-  onEnter: () => {
-    gsap.fromTo(
-      "#contato .btn-primary, #contato .btn-outline",
-      { opacity: 0, y: 20, scale: 0.95 },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        stagger: 0.15,
-        duration: 0.6,
-        ease: "back.out(1.5)",
-      },
-    );
-  },
-});
+    window.addEventListener("resize", () => {
+        ScrollTrigger.getById("produtos-hscroll")?.refresh();
+    });
+})();

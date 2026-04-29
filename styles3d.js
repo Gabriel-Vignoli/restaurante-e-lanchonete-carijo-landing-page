@@ -1,7 +1,5 @@
 // ════════════════════════════════════════════════════
 //  CARIJÓ — 3D ANIMATIONS ENGINE
-//  Integra: Three.js particles hero, CSS 3D tilt cards,
-//           floating food orbs, liquid mesh background
 // ════════════════════════════════════════════════════
 
 gsap.registerPlugin(ScrollTrigger);
@@ -32,30 +30,27 @@ const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(0x000000, 0);
 
-  // ── Nebula particles ──────────────────────────────
   const PARTICLE_COUNT = 2200;
   const positions = new Float32Array(PARTICLE_COUNT * 3);
   const colors = new Float32Array(PARTICLE_COUNT * 3);
   const sizes = new Float32Array(PARTICLE_COUNT);
 
   const palette = [
-    new THREE.Color("#02AFF4"), // blue
-    new THREE.Color("#01d4ff"), // blue-light
-    new THREE.Color("#FEED01"), // yellow
-    new THREE.Color("#0a7fa8"), // teal
-    new THREE.Color("#ffffff"), // white
+    new THREE.Color("#02AFF4"),
+    new THREE.Color("#01d4ff"),
+    new THREE.Color("#FEED01"),
+    new THREE.Color("#0a7fa8"),
+    new THREE.Color("#ffffff"),
   ];
 
   for (let i = 0; i < PARTICLE_COUNT; i++) {
-    // Spherical distribution with arms (galaxy-like)
     const r =
       Math.random() < 0.6
-        ? THREE.MathUtils.randFloat(0.5, 4.5) // disk
-        : THREE.MathUtils.randFloat(4.5, 9); // halo
+        ? THREE.MathUtils.randFloat(0.5, 4.5)
+        : THREE.MathUtils.randFloat(4.5, 9);
 
     const theta = Math.random() * Math.PI * 2;
     const phi = (Math.random() - 0.5) * Math.PI * 0.35;
-
     const arm = Math.floor(Math.random() * 3) * ((Math.PI * 2) / 3);
     const spin = r * 0.5;
 
@@ -67,7 +62,6 @@ const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
       r * Math.sin(theta + arm + spin) + THREE.MathUtils.randFloatSpread(0.6);
 
     const col = palette[Math.floor(Math.random() * palette.length)];
-    // Yellow rarer, more impactful
     const finalCol = Math.random() < 0.08 ? palette[2] : col;
     colors[i * 3] = finalCol.r;
     colors[i * 3 + 1] = finalCol.g;
@@ -99,10 +93,8 @@ const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
       void main() {
         vColor = color;
         vec3 pos = position;
-        // Gentle drift
         pos.y += sin(uTime * 0.3 + position.x * 0.5) * 0.04;
         pos.x += cos(uTime * 0.2 + position.z * 0.4) * 0.03;
-
         vec4 mvPos = modelViewMatrix * vec4(pos, 1.0);
         gl_PointSize = size * uPixelRatio * (300.0 / -mvPos.z);
         gl_Position  = projectionMatrix * mvPos;
@@ -126,7 +118,6 @@ const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
   const particles = new THREE.Points(geometry, material);
   scene.add(particles);
 
-  // ── Glowing orbs (food emoji positions) ──────────
   const orbGeo = new THREE.SphereGeometry(0.08, 16, 16);
   const orbMat = new THREE.MeshBasicMaterial({
     color: "#02AFF4",
@@ -151,18 +142,14 @@ const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
     orbs.push(orb);
   }
 
-  // ── Mouse parallax ────────────────────────────────
-  let mouseX = 0,
-    mouseY = 0;
-  let targetX = 0,
-    targetY = 0;
+  let mouseX = 0, mouseY = 0;
+  let targetX = 0, targetY = 0;
 
   window.addEventListener("mousemove", (e) => {
     mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
     mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
   });
 
-  // ── Scroll fade ───────────────────────────────────
   let scrollProgress = 0;
   window.addEventListener("scroll", () => {
     const hero = document.getElementById("hero");
@@ -170,7 +157,6 @@ const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
     renderer.domElement.style.opacity = 1 - scrollProgress;
   });
 
-  // ── Resize ───────────────────────────────────────
   window.addEventListener("resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -178,7 +164,6 @@ const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
     material.uniforms.uPixelRatio.value = renderer.getPixelRatio();
   });
 
-  // ── Animate ──────────────────────────────────────
   let clock = new THREE.Clock();
 
   (function animate() {
@@ -186,24 +171,19 @@ const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
     const t = clock.getElapsedTime();
 
     material.uniforms.uTime.value = t;
-
-    // Galaxy rotation
     particles.rotation.y = t * 0.04;
     particles.rotation.x = Math.sin(t * 0.05) * 0.06;
 
-    // Mouse parallax (smooth)
     targetX = lerp(targetX, mouseX * 0.25, 0.04);
     targetY = lerp(targetY, mouseY * 0.15, 0.04);
     camera.position.x = targetX;
     camera.position.y = -targetY;
     camera.lookAt(0, 0, 0);
 
-    // Orbs float
     orbs.forEach((orb) => {
       orb.position.y =
         orb.userData.baseY +
-        Math.sin(t * orb.userData.speed + orb.userData.phase) *
-          orb.userData.amp;
+        Math.sin(t * orb.userData.speed + orb.userData.phase) * orb.userData.amp;
       orb.material.opacity =
         0.3 + Math.sin(t * orb.userData.speed * 1.5 + orb.userData.phase) * 0.3;
     });
@@ -228,7 +208,6 @@ function addTilt(selector, opts = {}) {
     card.style.transformStyle = "preserve-3d";
     card.style.willChange = "transform";
 
-    // glare overlay
     let glareEl = null;
     if (glare) {
       glareEl = document.createElement("div");
@@ -249,9 +228,7 @@ function addTilt(selector, opts = {}) {
       card.appendChild(glareEl);
     }
 
-    let tx = 0,
-      ty = 0,
-      ts = 1;
+    let tx = 0, ty = 0, ts = 1;
     let raf;
 
     function updateTransform() {
@@ -262,7 +239,6 @@ function addTilt(selector, opts = {}) {
       const rect = card.getBoundingClientRect();
       const cx = (e.clientX - rect.left) / rect.width - 0.5;
       const cy = (e.clientY - rect.top) / rect.height - 0.5;
-
       const targetX = cx * maxTilt;
       const targetY = -cy * maxTilt;
 
@@ -300,11 +276,7 @@ function addTilt(selector, opts = {}) {
             speed,
           );
 
-        if (
-          Math.abs(tx) > 0.01 ||
-          Math.abs(ty) > 0.01 ||
-          Math.abs(ts - 1) > 0.001
-        ) {
+        if (Math.abs(tx) > 0.01 || Math.abs(ty) > 0.01 || Math.abs(ts - 1) > 0.001) {
           raf = requestAnimationFrame(loop);
         } else {
           card.style.transform = "";
@@ -314,21 +286,19 @@ function addTilt(selector, opts = {}) {
   });
 }
 
-// Apply tilt to all interactive cards
-addTilt(".produto-card", { maxTilt: 12, scale: 1.05, glareMax: 0.3 });
-addTilt(".esfirra-card", { maxTilt: 10, scale: 1.04, glareMax: 0.25 });
-addTilt(".review-card", { maxTilt: 8, scale: 1.03, glareMax: 0.2 });
-addTilt(".stat-card", { maxTilt: 14, scale: 1.06, glareMax: 0.35 });
-addTilt(".visual-main", { maxTilt: 18, scale: 1.03, glareMax: 0.4 });
+// ── Tilt aplicado — .produto-card-h (novo) ──
+addTilt(".produto-card-h", { maxTilt: 12, scale: 1.05, glareMax: 0.3 });
+addTilt(".esfirra-card",   { maxTilt: 10, scale: 1.04, glareMax: 0.25 });
+addTilt(".review-card",    { maxTilt: 8,  scale: 1.03, glareMax: 0.2 });
+addTilt(".stat-card",      { maxTilt: 14, scale: 1.06, glareMax: 0.35 });
+addTilt(".visual-main",    { maxTilt: 18, scale: 1.03, glareMax: 0.4 });
 
 // ════════════════════════════════════════════════════
-//  4. MAGNETIC BUTTONS — CTAs com efeito magnético 3D
+//  4. MAGNETIC BUTTONS
 // ════════════════════════════════════════════════════
 function magneticEffect(selector) {
   document.querySelectorAll(selector).forEach((btn) => {
-    let bx = 0,
-      by = 0,
-      raf;
+    let bx = 0, by = 0, raf;
 
     btn.addEventListener("mousemove", (e) => {
       const rect = btn.getBoundingClientRect();
@@ -366,7 +336,7 @@ function magneticEffect(selector) {
 magneticEffect(".btn-primary, .btn-outline");
 
 // ════════════════════════════════════════════════════
-//  5. LIQUID MORPHING BLOB — Esfirras section accent
+//  5. LIQUID MORPHING BLOB
 // ════════════════════════════════════════════════════
 (function initBlob() {
   const svg = document.getElementById("blob-svg");
@@ -387,7 +357,6 @@ magneticEffect(".btn-primary, .btn-outline");
       const a = (i / N) * Math.PI * 2;
       pts.push(blobPoint(a, time, 120, 28, 4));
     }
-
     let d = `M ${pts[0][0]},${pts[0][1]}`;
     for (let i = 0; i < N; i++) {
       const curr = pts[i];
@@ -408,21 +377,17 @@ magneticEffect(".btn-primary, .btn-outline");
 })();
 
 // ════════════════════════════════════════════════════
-//  6. SCROLL 3D DEPTH — Seções com parallax 3D layers
+//  6. SCROLL 3D DEPTH
 // ════════════════════════════════════════════════════
 (function init3DScrollDepth() {
-  // Stat cards — rise with depth
+  // Stat cards
   gsap.utils.toArray(".stat-card").forEach((card, i) => {
     gsap.fromTo(
       card,
       { rotateX: 25, opacity: 0, y: 60 },
       {
-        rotateX: 0,
-        opacity: 1,
-        y: 0,
-        duration: 0.9,
-        delay: i * 0.1,
-        ease: "back.out(1.4)",
+        rotateX: 0, opacity: 1, y: 0,
+        duration: 0.9, delay: i * 0.1, ease: "back.out(1.4)",
         scrollTrigger: {
           trigger: card,
           start: "top 88%",
@@ -433,40 +398,16 @@ magneticEffect(".btn-primary, .btn-outline");
     card.style.transformStyle = "preserve-3d";
   });
 
-  // Produto cards — flip in
-  gsap.utils.toArray(".produto-card").forEach((card, i) => {
-    gsap.fromTo(
-      card,
-      { rotateY: -25, opacity: 0, x: -30 },
-      {
-        rotateY: 0,
-        opacity: 1,
-        x: 0,
-        duration: 0.8,
-        delay: (i % 3) * 0.12,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: card,
-          start: "top 88%",
-          toggleActions: "play none none none",
-        },
-      },
-    );
-  });
+  // ── .produto-card REMOVIDO — seção usa scroll horizontal agora ──
 
-  // Review cards — fall in from above
+  // Review cards
   gsap.utils.toArray(".review-card").forEach((card, i) => {
     gsap.fromTo(
       card,
       { rotateX: 30, opacity: 0, y: -40, scale: 0.95 },
       {
-        rotateX: 0,
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.75,
-        delay: (i % 3) * 0.1,
-        ease: "back.out(1.2)",
+        rotateX: 0, opacity: 1, y: 0, scale: 1,
+        duration: 0.75, delay: (i % 3) * 0.1, ease: "back.out(1.2)",
         scrollTrigger: {
           trigger: card,
           start: "top 88%",
@@ -476,18 +417,14 @@ magneticEffect(".btn-primary, .btn-outline");
     );
   });
 
-  // Esfirra cards — slide-tilt in
+  // Esfirra cards
   gsap.utils.toArray(".esfirra-card").forEach((card, i) => {
     gsap.fromTo(
       card,
       { rotateY: 20, opacity: 0, x: 40 },
       {
-        rotateY: 0,
-        opacity: 1,
-        x: 0,
-        duration: 0.75,
-        delay: (i % 3) * 0.1,
-        ease: "power3.out",
+        rotateY: 0, opacity: 1, x: 0,
+        duration: 0.75, delay: (i % 3) * 0.1, ease: "power3.out",
         scrollTrigger: {
           trigger: card,
           start: "top 88%",
@@ -499,13 +436,12 @@ magneticEffect(".btn-primary, .btn-outline");
 })();
 
 // ════════════════════════════════════════════════════
-//  7. HERO TITLE — 3D letter split animation
+//  7. HERO TITLE — 3D letter split
 // ════════════════════════════════════════════════════
 (function heroLetterSplit() {
   const title = document.querySelector(".hero-title");
   if (!title) return;
 
-  // Only animate "Carijó" text node (not the <em>)
   const textNode = title.childNodes[0];
   if (!textNode || textNode.nodeType !== 3) return;
 
@@ -531,7 +467,7 @@ magneticEffect(".btn-primary, .btn-outline");
 })();
 
 // ════════════════════════════════════════════════════
-//  8. CURSOR GLOW — Custom 3D depth cursor
+//  8. CURSOR GLOW
 // ════════════════════════════════════════════════════
 (function initCursorGlow() {
   const cursor = document.createElement("div");
@@ -540,8 +476,7 @@ magneticEffect(".btn-primary, .btn-outline");
     width: "20px",
     height: "20px",
     borderRadius: "50%",
-    background:
-      "radial-gradient(circle, rgba(2,175,244,0.8) 0%, rgba(2,175,244,0) 70%)",
+    background: "radial-gradient(circle, rgba(2,175,244,0.8) 0%, rgba(2,175,244,0) 70%)",
     pointerEvents: "none",
     zIndex: "9999",
     transform: "translate(-50%, -50%)",
@@ -565,10 +500,7 @@ magneticEffect(".btn-primary, .btn-outline");
   document.body.appendChild(cursor);
   document.body.appendChild(ring);
 
-  let mx = 0,
-    my = 0,
-    rx = 0,
-    ry = 0;
+  let mx = 0, my = 0, rx = 0, ry = 0;
 
   window.addEventListener("mousemove", (e) => {
     mx = e.clientX;
@@ -585,9 +517,9 @@ magneticEffect(".btn-primary, .btn-outline");
     requestAnimationFrame(loop);
   })();
 
-  // Expand on hoverable elements
+  // ── .produto-card-h adicionado aos hoverables ──
   const hoverables =
-    "a, button, .produto-card, .esfirra-card, .stat-card, .review-card, .btn-primary, .btn-outline";
+    "a, button, .produto-card-h, .esfirra-card, .stat-card, .review-card, .btn-primary, .btn-outline";
   document.querySelectorAll(hoverables).forEach((el) => {
     el.addEventListener("mouseenter", () => {
       cursor.style.width = "40px";
@@ -605,7 +537,6 @@ magneticEffect(".btn-primary, .btn-outline");
     });
   });
 
-  // Hide on mobile
   if ("ontouchstart" in window) {
     cursor.style.display = "none";
     ring.style.display = "none";
@@ -613,7 +544,7 @@ magneticEffect(".btn-primary, .btn-outline");
 })();
 
 // ════════════════════════════════════════════════════
-//  9. ORIGINAL GSAP (navbar, hero entrance etc.)
+//  9. NAVBAR + HERO ENTRANCE + REVEALS + PARALLAX
 // ════════════════════════════════════════════════════
 
 // ─── NAVBAR ───
@@ -639,11 +570,11 @@ document.querySelectorAll(".mobile-link").forEach((link) => {
 // ─── HERO ENTRANCE ───
 const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
 heroTl
-  .to(".hero-badge", { opacity: 1, y: 0, duration: 0.8, delay: 0.8 })
-  .to(".hero-title", { opacity: 1, y: 0, duration: 1 }, "-=0.4")
+  .to(".hero-badge",    { opacity: 1, y: 0, duration: 0.8, delay: 0.8 })
+  .to(".hero-title",    { opacity: 1, y: 0, duration: 1 },   "-=0.4")
   .to(".hero-subtitle", { opacity: 1, y: 0, duration: 0.8 }, "-=0.5")
-  .to(".hero-desc", { opacity: 1, y: 0, duration: 0.8 }, "-=0.4")
-  .to(".hero-ctas", { opacity: 1, y: 0, duration: 0.8 }, "-=0.4");
+  .to(".hero-desc",     { opacity: 1, y: 0, duration: 0.8 }, "-=0.4")
+  .to(".hero-ctas",     { opacity: 1, y: 0, duration: 0.8 }, "-=0.4");
 
 // ─── PARALLAX HERO ───
 gsap.to(".hero-circles", {
@@ -657,19 +588,16 @@ gsap.to(".hero-circles", {
   },
 });
 
-// ─── SECTION REVEALS (fallback for non-3D) ───
+// ─── SECTION REVEALS ───
+// ── skip list atualizado para .produto-card-h ──
 function createScrollReveal(selector) {
   gsap.utils.toArray(selector).forEach((el, i) => {
-    // Skip elements that already have 3D animation
     const skip = el.closest(
-      ".produto-card, .esfirra-card, .review-card, .stat-card",
+      ".produto-card-h, .esfirra-card, .review-card, .stat-card",
     );
     if (skip) return;
     gsap.to(el, {
-      opacity: 1,
-      y: 0,
-      x: 0,
-      scale: 1,
+      opacity: 1, y: 0, x: 0, scale: 1,
       duration: 0.8,
       delay: (i % 3) * 0.12,
       ease: "power3.out",
@@ -708,14 +636,7 @@ ScrollTrigger.create({
     gsap.fromTo(
       ".dia-chip",
       { opacity: 0, y: 20, rotateX: 45 },
-      {
-        opacity: 1,
-        y: 0,
-        rotateX: 0,
-        stagger: 0.08,
-        duration: 0.5,
-        ease: "back.out(1.5)",
-      },
+      { opacity: 1, y: 0, rotateX: 0, stagger: 0.08, duration: 0.5, ease: "back.out(1.5)" },
     );
   },
 });
@@ -729,14 +650,76 @@ ScrollTrigger.create({
     gsap.fromTo(
       "#contato .btn-primary, #contato .btn-outline",
       { opacity: 0, y: 20, scale: 0.95 },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        stagger: 0.15,
-        duration: 0.6,
-        ease: "back.out(1.5)",
-      },
+      { opacity: 1, y: 0, scale: 1, stagger: 0.15, duration: 0.6, ease: "back.out(1.5)" },
     );
   },
 });
+
+// ════════════════════════════════════════════════════
+//  10. PRODUTOS — Scroll Horizontal
+// ════════════════════════════════════════════════════
+(function initProdutosHScroll() {
+  const section = document.getElementById("produtos");
+  const track   = document.getElementById("produtos-track");
+  const dots    = document.querySelectorAll("#produtos-dots .dot");
+  const hint    = document.getElementById("scroll-hint");
+
+  if (!section || !track) return;
+
+  const cards      = track.querySelectorAll(".produto-card-h");
+  const totalCards = cards.length;
+
+  if (window.innerWidth <= 768) {
+    section.style.height = "auto";
+    return;
+  }
+
+  function getScrollDistance() {
+    const viewportW = section.querySelector(".produtos-pin-wrapper").offsetWidth;
+    return Math.max(0, track.scrollWidth - viewportW);
+  }
+
+  gsap.to(track, {
+    x: () => -(getScrollDistance()),
+    ease: "none",
+    scrollTrigger: {
+      id:      "produtos-hscroll",
+      trigger:  section,
+      start:   "top top",
+      end:     () => `+=${section.offsetHeight - window.innerHeight}`,
+      scrub:    1.2,
+      invalidateOnRefresh: true,
+      onUpdate(self) {
+        const idx = Math.round(self.progress * (totalCards - 1));
+        dots.forEach((d, i) => d.classList.toggle("active", i === idx));
+        if (hint) hint.style.opacity = self.progress > 0.12 ? "0" : "1";
+      },
+    },
+  });
+
+  // Cabeçalho — animação de entrada
+  gsap.from("#produtos-header", {
+    y: 40, opacity: 0, duration: 0.9, ease: "power3.out",
+    scrollTrigger: {
+      id: "produtos-header-reveal",
+      trigger: section,
+      start: "top 80%",
+      toggleActions: "play none none none",
+    },
+  });
+
+  // Clique nas bolinhas
+  dots.forEach((dot, i) => {
+    dot.addEventListener("click", () => {
+      const progress   = i / (totalCards - 1);
+      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+      const travel     = section.offsetHeight - window.innerHeight;
+      window.scrollTo({ top: sectionTop + travel * progress, behavior: "smooth" });
+    });
+  });
+
+  // Refresh no resize
+  window.addEventListener("resize", () => {
+    ScrollTrigger.getById("produtos-hscroll")?.refresh();
+  });
+})();

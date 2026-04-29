@@ -788,35 +788,42 @@ section {
 }
 
 
-/* ─── PRODUTOS ─── */
+/* ─── PRODUTOS — Scroll Horizontal ─── */
+
 #produtos {
     background: var(--deep);
     position: relative;
-    overflow: hidden;
+    height: 400vh;
 }
 
-#produtos::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2302AFF4' fill-opacity='0.03'%3E%3Ccircle cx='40' cy='40' r='30'/%3E%3C/g%3E%3C/svg%3E");
+.produtos-pin-wrapper {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--deep);
+    overflow: visible;
+    padding: 4rem clamp(1.5rem, 5vw, 5rem);
+    box-sizing: border-box;
+    z-index: 1;
 }
 
 .produtos-header {
-    max-width: 1100px;
-    margin: 0 auto 4rem;
+    max-width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     flex-wrap: wrap;
     gap: 1.5rem;
+    opacity: 1; /* garante visibilidade antes do GSAP */
 }
 
 .produtos-header .section-label {
     color: var(--blue-light);
 }
 
-/* era --ochre-light */
 .produtos-header .section-title {
     color: var(--cream);
 }
@@ -828,26 +835,36 @@ section {
     line-height: 1.7;
 }
 
-.produtos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    max-width: 1100px;
-    margin: 0 auto;
+.produtos-scroll-viewport {
+    width: 100%;
+    overflow-x: hidden; /* só corta horizontal */
+    overflow-y: visible; /* deixa o tilt 3D respirar */    margin-top: 2.5rem;
+    padding: 20px 0; /* espaço vertical para o tilt 3D */
+    margin-top: 1.5rem; /* compensa o padding top */
 }
 
-.produto-card {
+.produtos-track {
+    display: flex;
+    gap: 1.5rem;
+    width: max-content;
+    will-change: transform;
+    transform: translateX(0);
+}
+
+.produto-card-h {
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(2, 175, 244, 0.15);
-    /* era ochre */
     border-radius: 12px;
-    padding: 2rem;
-    transition: all 0.4s ease;
+    padding: 2.5rem 2rem;
+    width: clamp(280px, 32vw, 400px);
+    height: clamp(380px, 50vh, 520px); 
+    flex-shrink: 0;
     position: relative;
     overflow: hidden;
+    transition: background 0.4s ease, border-color 0.4s ease;
 }
 
-.produto-card::before {
+.produto-card-h::before {
     content: '';
     position: absolute;
     top: 0;
@@ -855,56 +872,101 @@ section {
     right: 0;
     height: 2px;
     background: linear-gradient(to right, var(--blue), var(--teal-light));
-    /* era ochre→rust */
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.4s ease;
 }
 
-.produto-card:hover {
+.produto-card-h:hover {
     background: rgba(255, 255, 255, 0.07);
     border-color: rgba(2, 175, 244, 0.4);
-    /* era ochre */
-    transform: translateY(-5px);
 }
 
-.produto-card:hover::before {
+.produto-card-h:hover::before {
     transform: scaleX(1);
 }
 
-.produto-icon {
-    font-size: 3rem;
-    margin-bottom: 1.2rem;
-    display: block;
+.produto-card-h .produto-icon { font-size: 3rem; margin-bottom: 1.2rem; display: block; }
+.produto-card-h .produto-name { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--cream); margin-bottom: 0.6rem; }
+.produto-card-h .produto-desc { font-size: 0.88rem; color: rgba(255,255,255,0.5); line-height: 1.65; }
+.produto-card-h .produto-tag  { display: inline-block; margin-top: 1.2rem; background: rgba(2,175,244,0.12); border: 1px solid rgba(2,175,244,0.3); color: var(--blue-light); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 20px; }
+
+/* ── Bolinhas de progresso ── */
+.produtos-dots {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 2rem;
 }
 
-.produto-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.35rem;
-    font-weight: 700;
-    color: var(--cream);
-    margin-bottom: 0.6rem;
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.35s ease;
+    cursor: pointer;
 }
 
-.produto-desc {
-    font-size: 0.88rem;
-    color: rgba(255, 255, 255, 0.5);
-    line-height: 1.65;
+.dot.active {
+    background: var(--blue-light);
+    width: 22px;
+    border-radius: 4px;
 }
 
-.produto-tag {
-    display: inline-block;
-    margin-top: 1.2rem;
-    background: rgba(2, 175, 244, 0.12);
-    border: 1px solid rgba(2, 175, 244, 0.3);
-    color: var(--blue-light);
-    /* era --ochre-light */
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
+/* ── Hint de scroll ── */
+.scroll-hint {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    justify-content: flex-end;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    padding: 0.3rem 0.8rem;
-    border-radius: 20px;
+    color: rgba(2, 175, 244, 0.8);
+    animation: hintPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes hintPulse {
+    0%, 100% { opacity: 0.6; transform: translateX(0); }
+    50%       { opacity: 1;   transform: translateX(4px); }
+}
+
+/* ── Mobile: grid 3x2 original ── */
+.produtos-grid-mobile {
+    display: none; /* escondido no desktop */
+}
+
+@media (max-width: 768px) {
+    /* Desativa o scroll horizontal */
+    #produtos {
+        height: auto;
+        padding: 4rem 5%;
+    }
+
+    /* Esconde o layout de scroll horizontal */
+    .produtos-pin-wrapper {
+        display: none;
+    }
+
+    /* Mostra o grid original */
+    .produtos-grid-mobile {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1.2rem;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+      .produtos-grid-mobile .section-title {
+        color: var(--cream);
+    }
+
+    /* Header mobile separado (fora do pin-wrapper) */
+    .produtos-grid-mobile-header {
+        margin-bottom: 2rem;
+    }
 }
 
 /* ─── ESFIRRAS ─── */

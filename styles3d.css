@@ -1,18 +1,16 @@
 /* ═══════════════════════════════════════════════════════
    CARIJÓ — 3D ANIMATIONS CSS
-   Cole no final do styles.css
 ═══════════════════════════════════════════════════════ */
 
 /* ─── HERO CANVAS (Three.js) ─── */
 #hero-canvas {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 }
 
-/* Hero content precisa de z-index acima do canvas */
 .hero-content { z-index: 3; }
 .hero-badge   { z-index: 3; }
 .hero-scroll  { z-index: 3; }
@@ -22,94 +20,88 @@
 
 /* ─── FOOD ORBS ─── */
 .food-orb {
-  user-select: none;
+    user-select: none;
 }
 
 /* ─── CARTA 3D base ─── */
-.produto-card,
+/* .produto-card REMOVIDO — seção usa .produto-card-h agora */
+.produto-card-h,
 .esfirra-card,
 .review-card,
 .stat-card,
 .visual-main {
-  transform-style: preserve-3d;
-  will-change: transform;
+    transform-style: preserve-3d;
+    will-change: transform;
 }
 
-/* ─── BLOB SVG (esfirras section accent) ─── */
+/* ─── BLOB SVG ─── */
 #blob-svg {
-  position: absolute;
-  top: 50%;
-  right: -180px;
-  transform: translateY(-50%);
-  width: 360px;
-  height: 360px;
-  opacity: 0.07;
-  pointer-events: none;
-  z-index: 0;
-  overflow: visible;
+    position: absolute;
+    top: 50%;
+    right: -180px;
+    transform: translateY(-50%);
+    width: 360px;
+    height: 360px;
+    opacity: 0.07;
+    pointer-events: none;
+    z-index: 0;
+    overflow: visible;
 }
 
 #blob-svg path {
-  fill: var(--blue);
+    fill: var(--blue);
 }
 
 /* ─── HERO LETTER ANIMATION ─── */
 .hero-letter {
-  display: inline-block;
+    display: inline-block;
 }
 
-/* ─── MAGNETIC BUTTON (não conflita com hover existente) ─── */
+/* ─── MAGNETIC BUTTON ─── */
 .btn-primary,
 .btn-outline {
-  will-change: transform, box-shadow;
+    will-change: transform, box-shadow;
 }
 
-/* ─── 3D FLIP REVEAL — animation initial states ─── */
-/* Sobrescreve os .reveal-scale para as cards terem estado inicial */
-.produto-card.reveal-scale,
+/* ─── 3D FLIP REVEAL — estados iniciais ─── */
 .esfirra-card.reveal-scale,
 .review-card.reveal-scale {
-  opacity: 0; /* GSAP vai animar */
-}
-
-/* ─── CURSOR GLOW (desktop only) ─── */
-@media (hover: none) {
-  /* Remove cursor em touch */
+    opacity: 0;
 }
 
 /* ─── 3D PERSPECTIVE CONTAINERS ─── */
-.produtos-grid,
+/* .produtos-grid removido — não existe mais no DOM */
 .esfirras-grid,
 .reviews-grid,
 .selfservice-stats {
-  perspective: 1200px;
+    perspective: 1200px;
 }
 
-/* ─── SMOOTH CARD TRANSITIONS quando sem JS ─── */
+/* ─── REDUCED MOTION ─── */
 @media (prefers-reduced-motion: reduce) {
-  .produto-card,
-  .esfirra-card,
-  .review-card,
-  .stat-card {
-    transform: none !important;
-    transition: none !important;
-  }
+    .produto-card-h,
+    .esfirra-card,
+    .review-card,
+    .stat-card {
+        transform: none !important;
+        transition: none !important;
+    }
 
-  #hero-canvas {
-    display: none;
-  }
+    #hero-canvas {
+        display: none;
+    }
 }
 
-/* ─── GLARE (gerado via JS, garantir z-index) ─── */
-.produto-card > div[style*="radial-gradient"],
-.esfirra-card > div[style*="radial-gradient"],
-.review-card > div[style*="radial-gradient"],
-.stat-card > div[style*="radial-gradient"] {
-  z-index: 10;
-  pointer-events: none;
+/* ─── GLARE overlay z-index ─── */
+.produto-card-h > div[style*="radial-gradient"],
+.esfirra-card   > div[style*="radial-gradient"],
+.review-card    > div[style*="radial-gradient"],
+.stat-card      > div[style*="radial-gradient"] {
+    z-index: 10;
+    pointer-events: none;
 }
 
-/* ─── BLOB ESFIRRAS POSITION ─── */
+/* ─── BLOB ESFIRRAS ─── */
 #esfirras {
-  position: relative; /* já existe, garante */
+    position: relative;
 }
