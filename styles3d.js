@@ -659,67 +659,96 @@ ScrollTrigger.create({
 //  10. PRODUTOS — Scroll Horizontal
 // ════════════════════════════════════════════════════
 (function initProdutosHScroll() {
-  const section = document.getElementById("produtos");
-  const track   = document.getElementById("produtos-track");
-  const dots    = document.querySelectorAll("#produtos-dots .dot");
-  const hint    = document.getElementById("scroll-hint");
+    const section = document.getElementById("produtos");
+    if (!section) return;
 
-  if (!section || !track) return;
+    // ── MOBILE ──────────────────────────────────────────
+    if (window.innerWidth <= 768) {
+        section.style.height = "auto";
 
-  const cards      = track.querySelectorAll(".produto-card-h");
-  const totalCards = cards.length;
+        window.addEventListener("load", () => {
+            ScrollTrigger.refresh();
 
-  if (window.innerWidth <= 768) {
-    section.style.height = "auto";
-    return;
-  }
+            gsap.fromTo(
+                ".produtos-grid-mobile .section-label, .produtos-grid-mobile .section-title, .produtos-grid-mobile p",
+                { opacity: 0, y: 30 },
+                {
+                    opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: ".produtos-grid-mobile",
+                        start: "top 90%",
+                        toggleActions: "play none none none",
+                    }
+                }
+            );
 
-  function getScrollDistance() {
-    const viewportW = section.querySelector(".produtos-pin-wrapper").offsetWidth;
-    return Math.max(0, track.scrollWidth - viewportW);
-  }
+            gsap.utils.toArray(".produtos-grid-mobile .produto-card-h").forEach((card, i) => {
+                gsap.fromTo(card,
+                    { opacity: 0, y: 40 },
+                    {
+                        opacity: 1, y: 0,
+                        duration: 0.7,
+                        delay: (i % 2) * 0.1,
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: card,
+                            start: "top 92%",
+                            toggleActions: "play none none none",
+                        }
+                    }
+                );
+            });
+        });
 
-  gsap.to(track, {
-    x: () => -(getScrollDistance()),
-    ease: "none",
-    scrollTrigger: {
-      id:      "produtos-hscroll",
-      trigger:  section,
-      start:   "top top",
-      end:     () => `+=${section.offsetHeight - window.innerHeight}`,
-      scrub:    1.2,
-      invalidateOnRefresh: true,
-      onUpdate(self) {
-        const idx = Math.round(self.progress * (totalCards - 1));
-        dots.forEach((d, i) => d.classList.toggle("active", i === idx));
-        if (hint) hint.style.opacity = self.progress > 0.12 ? "0" : "1";
-      },
-    },
-  });
+        return;
+    }
 
-  // Cabeçalho — animação de entrada
-  gsap.from("#produtos-header", {
-    y: 40, opacity: 0, duration: 0.9, ease: "power3.out",
-    scrollTrigger: {
-      id: "produtos-header-reveal",
-      trigger: section,
-      start: "top 80%",
-      toggleActions: "play none none none",
-    },
-  });
+    // ── DESKTOP ─────────────────────────────────────────
+    const track = document.getElementById("produtos-track");
+    const dots  = document.querySelectorAll("#produtos-dots .dot");
+    const hint  = document.getElementById("scroll-hint");
+    if (!track) return;
 
-  // Clique nas bolinhas
-  dots.forEach((dot, i) => {
-    dot.addEventListener("click", () => {
-      const progress   = i / (totalCards - 1);
-      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-      const travel     = section.offsetHeight - window.innerHeight;
-      window.scrollTo({ top: sectionTop + travel * progress, behavior: "smooth" });
+    const totalCards = track.querySelectorAll(".produto-card-h").length;
+
+    function getScrollDistance() {
+        const viewportW = section.querySelector(".produtos-pin-wrapper").offsetWidth;
+        return Math.max(0, track.scrollWidth - viewportW);
+    }
+
+    gsap.to(track, {
+        x: () => -(getScrollDistance()),
+        ease: "none",
+        scrollTrigger: {
+            id:      "produtos-hscroll",
+            trigger:  section,
+            start:   "top top",
+            end:     () => `+=${(section.offsetHeight - window.innerHeight) * 0.65}`,
+            scrub:    0.4,
+            invalidateOnRefresh: true,
+            onUpdate(self) {
+                const idx = Math.round(self.progress * (totalCards - 1));
+                dots.forEach((d, i) => d.classList.toggle("active", i === idx));
+                if (hint) hint.style.opacity = self.progress > 0.12 ? "0" : "1";
+            },
+        },
     });
-  });
 
-  // Refresh no resize
-  window.addEventListener("resize", () => {
-    ScrollTrigger.getById("produtos-hscroll")?.refresh();
-  });
+    gsap.from("#produtos-header", {
+        y: 30, opacity: 0, duration: 1, ease: "power3.out", delay: 0.2,
+        clearProps: "opacity,transform"
+    });
+
+    dots.forEach((dot, i) => {
+        dot.addEventListener("click", () => {
+            const progress   = i / (totalCards - 1);
+            const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+            const travel     = section.offsetHeight - window.innerHeight;
+            window.scrollTo({ top: sectionTop + travel * progress, behavior: "smooth" });
+        });
+    });
+
+    window.addEventListener("resize", () => {
+        ScrollTrigger.getById("produtos-hscroll")?.refresh();
+    });
 })();
