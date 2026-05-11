@@ -469,93 +469,93 @@ magneticEffect(".btn-primary, .btn-outline");
 // ════════════════════════════════════════════════════
 //  8. CURSOR GLOW
 // ════════════════════════════════════════════════════
-(function initCursorGlow() {
-  if ("ontouchstart" in window) return;
+// (function initCursorGlow() {
+//   if ("ontouchstart" in window) return;
 
-  // ── Cursor principal ──
-  const cursor = document.createElement("div");
-  Object.assign(cursor.style, {
-    position: "fixed",
-    width: "12px",
-    height: "12px",
-    borderRadius: "50%",
-    background: "rgba(2,175,244,0.9)",
-    pointerEvents: "none",
-    zIndex: "9999",
-    transform: "translate(-50%, -50%)",
-    transition: "width 0.2s, height 0.2s, background 0.2s",
-    mixBlendMode: "screen",
-  });
+//   // ── Cursor principal ──
+//   const cursor = document.createElement("div");
+//   Object.assign(cursor.style, {
+//     position: "fixed",
+//     width: "12px",
+//     height: "12px",
+//     borderRadius: "50%",
+//     background: "rgba(2,175,244,0.9)",
+//     pointerEvents: "none",
+//     zIndex: "9999",
+//     transform: "translate(-50%, -50%)",
+//     transition: "width 0.2s, height 0.2s, background 0.2s",
+//     mixBlendMode: "screen",
+//   });
 
-  document.body.appendChild(cursor);
+//   document.body.appendChild(cursor);
 
-  // ── Trail (rastro) ──
-  const TRAIL_LENGTH = 18;
-  const trail = [];
+//   // ── Trail (rastro) ──
+//   const TRAIL_LENGTH = 18;
+//   const trail = [];
 
-  for (let i = 0; i < TRAIL_LENGTH; i++) {
-    const progress = i / TRAIL_LENGTH;
-    const size = 10 * (1 - progress);
-    const dot = document.createElement("div");
-    Object.assign(dot.style, {
-      position: "fixed",
-      width:  size + "px",
-      height: size + "px",
-      borderRadius: "50%",
-      background: `rgba(2,175,244,${0.5 * (1 - progress)})`,
-      pointerEvents: "none",
-      zIndex: "9997",
-      transform: "translate(-50%, -50%)",
-      mixBlendMode: "screen",
-    });
-    document.body.appendChild(dot);
-    trail.push({ el: dot, x: 0, y: 0 });
-  }
+//   for (let i = 0; i < TRAIL_LENGTH; i++) {
+//     const progress = i / TRAIL_LENGTH;
+//     const size = 10 * (1 - progress);
+//     const dot = document.createElement("div");
+//     Object.assign(dot.style, {
+//       position: "fixed",
+//       width:  size + "px",
+//       height: size + "px",
+//       borderRadius: "50%",
+//       background: `rgba(2,175,244,${0.5 * (1 - progress)})`,
+//       pointerEvents: "none",
+//       zIndex: "9997",
+//       transform: "translate(-50%, -50%)",
+//       mixBlendMode: "screen",
+//     });
+//     document.body.appendChild(dot);
+//     trail.push({ el: dot, x: 0, y: 0 });
+//   }
 
-  let mx = 0, my = 0;
+//   let mx = 0, my = 0;
 
-  window.addEventListener("mousemove", (e) => {
-    mx = e.clientX;
-    my = e.clientY;
-    cursor.style.left = mx + "px";
-    cursor.style.top  = my + "px";
-  });
+//   window.addEventListener("mousemove", (e) => {
+//     mx = e.clientX;
+//     my = e.clientY;
+//     cursor.style.left = mx + "px";
+//     cursor.style.top  = my + "px";
+//   });
 
-  (function loop() {
-    trail[0].x = lerp(trail[0].x, mx, 0.25);
-    trail[0].y = lerp(trail[0].y, my, 0.25);
+//   (function loop() {
+//     trail[0].x = lerp(trail[0].x, mx, 0.25);
+//     trail[0].y = lerp(trail[0].y, my, 0.25);
 
-    for (let i = 1; i < TRAIL_LENGTH; i++) {
-      const factor = Math.max(0.22 - i * 0.008, 0.04);
-      trail[i].x = lerp(trail[i].x, trail[i - 1].x, factor);
-      trail[i].y = lerp(trail[i].y, trail[i - 1].y, factor);
-      trail[i].el.style.left = trail[i].x + "px";
-      trail[i].el.style.top  = trail[i].y + "px";
-    }
+//     for (let i = 1; i < TRAIL_LENGTH; i++) {
+//       const factor = Math.max(0.22 - i * 0.008, 0.04);
+//       trail[i].x = lerp(trail[i].x, trail[i - 1].x, factor);
+//       trail[i].y = lerp(trail[i].y, trail[i - 1].y, factor);
+//       trail[i].el.style.left = trail[i].x + "px";
+//       trail[i].el.style.top  = trail[i].y + "px";
+//     }
 
-    trail[0].el.style.left = trail[0].x + "px";
-    trail[0].el.style.top  = trail[0].y + "px";
+//     trail[0].el.style.left = trail[0].x + "px";
+//     trail[0].el.style.top  = trail[0].y + "px";
 
-    requestAnimationFrame(loop);
-  })();
+//     requestAnimationFrame(loop);
+//   })();
 
-  // ── Hover em elementos interativos ──
-  const hoverables =
-    "a, button, .produto-card-h, .esfirra-card, .stat-card, .review-card, .btn-primary, .btn-outline";
+//   // ── Hover em elementos interativos ──
+//   const hoverables =
+//     "a, button, .produto-card-h, .esfirra-card, .stat-card, .review-card, .btn-primary, .btn-outline";
 
-  document.querySelectorAll(hoverables).forEach((el) => {
-    el.addEventListener("mouseenter", () => {
-      cursor.style.width  = "28px";
-      cursor.style.height = "28px";
-      cursor.style.background = "rgba(254,237,1,0.85)";
-    });
-    el.addEventListener("mouseleave", () => {
-      cursor.style.width  = "12px";
-      cursor.style.height = "12px";
-      cursor.style.background = "rgba(2,175,244,0.9)";
-    });
-  });
-})();
+//   document.querySelectorAll(hoverables).forEach((el) => {
+//     el.addEventListener("mouseenter", () => {
+//       cursor.style.width  = "28px";
+//       cursor.style.height = "28px";
+//       cursor.style.background = "rgba(254,237,1,0.85)";
+//     });
+//     el.addEventListener("mouseleave", () => {
+//       cursor.style.width  = "12px";
+//       cursor.style.height = "12px";
+//       cursor.style.background = "rgba(2,175,244,0.9)";
+//     });
+//   });
+// })();
 
 // ════════════════════════════════════════════════════
 //  9. NAVBAR + HERO ENTRANCE + REVEALS + PARALLAX

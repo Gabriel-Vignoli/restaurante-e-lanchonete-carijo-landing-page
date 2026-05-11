@@ -837,8 +837,9 @@ section {
 
 .produtos-scroll-viewport {
     width: 100%;
-    overflow-x: hidden; /* só corta horizontal */
-    overflow-y: visible; /* deixa o tilt 3D respirar */    margin-top: 2.5rem;
+    overflow-x: visible; /* só corta horizontal */
+    overflow-y: visible; /* deixa o tilt 3D respirar */    
+    margin-top: 2.5rem;
     padding: 20px 0; /* espaço vertical para o tilt 3D */
     margin-top: 1.5rem; /* compensa o padding top */
 }
